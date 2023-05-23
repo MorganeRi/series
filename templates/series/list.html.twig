@@ -1,0 +1,41 @@
+{% extends '/base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} | List
+{% endblock %}
+
+{% block body %}
+    <h2>List if series</h2>
+    <div class="flex_between flex_div">
+        {% if currentPage >1 %}
+            <a class ="link_button" href="{{ path('serie_list', {'page': currentPage-1}) }}">Previous page</a>
+        {% else %}
+            <div></div>
+        {% endif %}
+        {% if currentPage < maxPage %}
+            <a class ="link_button" href="{{ path('serie_list', {'page': currentPage+1}) }}">Next page</a>
+        {% endif %}
+    </div>
+<section class="series-list">
+
+    {%  for serie in series %}
+        <article>
+            <a href="{{ path('serie_show', {'id': serie.id}) }}" title="View details about {{ serie.name }} | seasons : {{ serie.seasons | length }}">
+                <img src="{{ asset('img/posters/series/' ~ serie.poster) }}" alt="{{ serie.name }}">
+            </a>
+        </article>
+    {% endfor %}
+
+</section>
+    <div class="flex_between flex_div">
+        {% if currentPage >1 %}
+        <a class ="link_button" href="{{ path('serie_list', {'page': currentPage-1}) }}">Previous page</a>
+            {% else %}
+            <div></div>
+        {% endif %}
+        {% if currentPage < maxPage %}
+        <a class ="link_button" href="{{ path('serie_list', {'page': currentPage+1}) }}">Next page</a>
+        {% endif %}
+    </div>
+
+{% endblock %}

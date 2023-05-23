@@ -1,0 +1,54 @@
+{% extends '/base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} | Show
+{% endblock %}
+
+{% block body %}
+    <h2>Detail of a serie</h2>
+
+    <section>
+        <div>
+            <a class ="link_button" href="{{ path('serie_update', {'id':serie.id}) }}">Edit</a>
+            <a class ="link_button" onclick="return confirm('Are you sure to delete {{ serie.name }} ?')" href="{{ path('serie_delete', {'id':serie.id}) }}">Delete</a>
+            <a class ="link_button" href="{{ path('season_add', {'id':serie.id}) }}">Add Season</a>
+        </div>
+        <div class="serie-details">
+            <img src="{{ asset('img/posters/series/' ~ serie.poster) }}" alt="{{ serie.name }}">
+        </div>
+
+        <div class="serie-details-infos">
+
+            <h3>{{ serie.name }}</h3>
+            <div>User ratings : {{ serie.vote }}</div>
+            <div>Categorized in : {{ serie.genres }}</div>
+            <div>Serie status : {{ serie.status }}</div>
+            <div>Aired from {{ serie.firstAirDate | date('d-m-Y') }} to {{ serie.lastAirDate | date('d-m-Y') }}</div>
+            <div>{{ serie.overview | nl2br }}</div>
+
+        </div>
+        </div>
+    </section>
+    <section class ="seasons">
+        <h3>Seasons</h3>
+        {% for season in serie.seasons %}
+            <article>
+                <img src="{{ asset('img/posters/seasons/'~ season.poster) }}" alt="{{ serie.name }} #{{ season.number }}">
+                <div>
+                    <h4>#{{ season.number }}</h4>
+                    <div>Aired From {{ season.firstAirDate | date('Y-m-d') }}</div>
+                    <div>{{ season.overview }}</div>
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+{% endblock %}
+
+
+{% block extraStyle %}
+<style>
+    body{
+        background-image: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.5)), url("{{ asset('img/backdrops/') ~ serie.backdrop }}");
+    }
+</style>
+{% endblock %}
